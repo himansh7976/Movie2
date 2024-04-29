@@ -1,0 +1,35 @@
+.movie__list {
+    padding: 0 3rem 3rem 3rem;
+}
+
+.list__title {
+font-size: 1.75rem;
+margin:  2.5rem;
+}
+
+.list__cards {
+    display: flex;
+    flex-wrap: wrap ;
+    justify-content: center;
+}
+.search{
+    text-align: center;
+    /* display: flex; */
+    
+
+
+    /* margin-left: 10%; */
+}
+
+.search input{
+
+    color: white;
+    border: 1px solid white;
+    border-radius: 25px 25px;
+    width: 50%;
+    padding: 10px;
+    background-color: rgb(0, 0, 9);
+}
+.search button{
+    background-color:;
+}

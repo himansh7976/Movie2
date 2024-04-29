@@ -1,0 +1,30 @@
+.posterImage{
+    /* height: 10%; */
+    width: 92%;
+    margin-left: 54%;
+    
+    /* border: 2px solid blue; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.posterImage img {
+    /* margin: auto;
+     */
+     /* margin-top: 10%; */
+    display: block;
+    width: 90%;
+    /* height: 100%; */
+    object-fit:fill;
+
+    /* width: 10%; */
+    
+}
+
+
+
+
+
+
+
