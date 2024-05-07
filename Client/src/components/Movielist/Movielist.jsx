@@ -54,7 +54,7 @@ const bt=(e)=>{
 
   setdata(
     data.filter((i)=>{
-      return i.original_title == inp;
+      return i.original_title == inp.toLowerCase();
     })
   )
 }

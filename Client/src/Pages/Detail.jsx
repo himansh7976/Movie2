@@ -1,71 +1,73 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import './Detail.css'
-function Detail() {
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-    const [currentMovieDetail, setMovie] = useState([])
-    const { id } = useParams()
+import './Detail.css';  
+
+const Detail = () => {
+    const { id } = useParams(); // Extract movieId from URL params
+    const [movie, setMovie] = useState(null);
+    const [error, setError] = useState(null);
+    console.log(">>>>>>",movie)
+
+    useEffect(() => {
+        const fetchMovieDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8002/api/movies/getsingle/${id}`);
+                console.log(response)
+                const { success, product } = response.data;
+                // console.log(response.data)
+                // console.log(product)
+                // console.log(success)
+                if (!success) {
+                    setMovie(product);
+                } else {
+                    setError('Movie not found');
+                }
+            } catch (error) {
+                setError('Error fetching movie details');
+            }
+        };
+
+        fetchMovieDetails();
+    }, [id]);
+
+    return (
+        <div>
+
+        {console.log(movie)}
+            {error ? (
+                <p>{error}</p>
+            ) : movie ? (
 
 
 
-    // useEffect(() => {
-    //     getData()
-    //     window.scrollTo(0,0)
-    // }, [])
-    // console.log(currentMovieDetail)
-
-    // const getData = () => {
-    //     fetch(`http://localhost:8002/api/movies/${id}`)
-    //     .then(res => res.json())
-    // .then(data => setMovie(data))
-        
-    // }
-
-    useEffect(()=>{
-        const api= async ()=>{
-            const res= await fetch(`http:localhost:8002/api/movies/getsingle/${id}`);
-            console.log(res);
-            const js= await res.json();
-            setMovie(js)
-            
-            
-        }
-        api();
-        
-        console.log(currentMovieDetail);
-    },[])
-    
-
-  return (
-    <div>
+               
+                <div>
 
 <div className="movie">
             <div className="movie__intro">
-                <img className="movie__backdrop" src={`https://image.tmdb.org/t/p/original${currentMovieDetail ? currentMovieDetail.backdrop_path : ""}`} />
+                <img className="movie__backdrop" src={`https://image.tmdb.org/t/p/original${movie ? movie.backdrop_path : ""}`} />
             </div>
             <div className="movie__detail">
                 <div className="movie__detailLeft">
                     <div className="movie__posterBox">
-                        <img className="movie__poster" src={`https://image.tmdb.org/t/p/original${currentMovieDetail ? currentMovieDetail.poster_path : ""}`} />
+                        <img className="movie__poster" src={`https://image.tmdb.org/t/p/original${movie ? movie.poster_path : ""}`} />
                     </div>
                 </div>
                 <div className="movie__detailRight">
                     <div className="movie__detailRightTop">
-                        <div className="movie__name">{ currentMovieDetail.original_title}</div>
-                        <div className="movie__tagline"></div>
-                        <div className="movie__rating">
-                             <i class="fas fa-star" />
-                            <span className="movie__voteCount"></span>
-                        </div>  
-                        <div className="movie__runtime"></div>
-                        <div className="movie__releaseDate"></div>
+                        <div className="movie__name">{movie ? movie.original_title : ""}</div>
+
+                       
+                      
                         <div className="movie__genres">
                            
                         </div>
                     </div>
                     <div className="movie__detailRightBottom">
                         <div className="synopsisText">Synopsis</div>
-                        <div>   </div>
+                        <div>{movie ? movie.overview : ""}</div>
                     </div>
                     
                 </div>
@@ -76,7 +78,16 @@ function Detail() {
         </div>
 
     </div>
-  )
-}
+                
 
-export default Detail
+
+
+
+            ) : (
+                <p>Loading...</p>
+            )}
+        </div>
+    );
+};
+
+export default Detail;
